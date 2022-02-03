@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
         <style>
             :root{
                 font-size: 20pt;
@@ -44,10 +45,40 @@
     <body>
         <form id="predict" method="POST">
             <label for="question">Question :</label><br>
-            <textarea rows="2" cols="60" name="text" placeholder="Question..."></textarea><br><br>
+            <textarea rows="2" cols="60" name="txt_question" placeholder="Question..."></textarea><br><br>
             <label for="body">Détails :</label><br>
-            <textarea rows="10" cols="60" name="text" placeholder="Details..."></textarea><br><br>
+            <textarea rows="10" cols="60" name="txt_body" placeholder="Details..."></textarea><br><br>
             <input type="submit" value="Submit">
         </form>
+        <hr>
+        <div id="predictionOutcome"></div>
+        <script>
+            $("form#predict").submit(function(event){
+                event.preventDefault();
+                var allElements=event.target.elements;
+                var json={
+                    "txt_question":allElements.txt_question.value,
+                    "txt_body":allElements.txt_body.value,
+                }
+                var jsonStr=JSON.stringify(json)
+                console.log(jsonStr)
+                $.ajax({
+                    url: "/api/predict",
+                    data: JSON.parse(jsonStr),
+                    method: "GET",
+                    success: function(result) {
+                        let predictedResult=result;
+                        let htmlStr="";
+                        htmlStr+=predictedResult
+                        console.log(htmlStr)
+                        $("#predictionOutcome").html(htmlStr);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                      }
+                });
+                return false
+            });
+        </script>
     </body>
 </html>
