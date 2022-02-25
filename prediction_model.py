@@ -3,7 +3,6 @@ import pandas as pd
 import nltk
 from nltk.stem import WordNetLemmatizer
 import string
-import pandas as pd
 from bs4 import BeautifulSoup
 
 from sklearn.multiclass import OneVsRestClassifier
