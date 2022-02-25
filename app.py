@@ -3,7 +3,7 @@ from werkzeug.wrappers import Request, Response
 
 from prediction_model import PredictionModel
 
-
+pred_model = PredictionModel()
 app = Flask(__name__)
 
 
@@ -15,6 +15,7 @@ def index():
 
 def predict():
     msg_data={}
+    arr_results = []
     for k in request.args.keys():
         val=request.args.get(k)
         msg_data[k]=val
@@ -34,5 +35,4 @@ def tokenize_text(x):
     return tags
 
 if __name__ == "__main__":
-    pred_model = PredictionModel()
     app.run()

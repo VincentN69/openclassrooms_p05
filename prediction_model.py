@@ -2,20 +2,20 @@ import joblib
 import pandas as pd
 import nltk
 from nltk.stem import WordNetLemmatizer
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('omw-1.4')
+
 import string
 from bs4 import BeautifulSoup
 
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.pipeline import Pipeline
-from sklearn.svm import LinearSVC
-from sklearn.model_selection import RandomizedSearchCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-from sklearn.linear_model import LogisticRegression, SGDClassifier
-from xgboost import XGBClassifier
-from sklearn.decomposition import LatentDirichletAllocation, NMF
+from sklearn.linear_model import LogisticRegression
 from scipy import sparse
-
 import re
 import numpy as np
 
@@ -24,24 +24,25 @@ class PredictionModel:
     VECT_PATH = 'models/vec_to_tag.joblib'
     
     def __init__(self) -> None:
-        self._model = self.import_predict_model()
-        self._output_model = self.import_ouput_model()
-    
+        #self._model = self.import_predict_model()
+        #self._output_model = self.import_ouput_model()
+        pass
     def format_input(self, input_dict) -> pd.Series:
         input_text = input_dict['txt_question'] +' '+ input_dict['txt_body']
         input_text = [self.word_processing(input_text)]
         return input_text
     
     def predict(self, X):
+        arr_results = []
         # preparation input
         formated_input = self.format_input(X)
         print('informative words :', formated_input)
         
         # prediction
-        arr_results = self._model.predict(formated_input)#.todense()
+        #arr_results = self._model.predict(formated_input)#.todense()
         
         # conversion vecteur en tags
-        arr_results = self._output_model.inverse_transform(arr_results)[0].tolist()
+        #arr_results = self._output_model.inverse_transform(arr_results)[0].tolist()
         print('tags predicted :',arr_results)
         return arr_results
     
