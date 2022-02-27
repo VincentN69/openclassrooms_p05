@@ -1,4 +1,4 @@
-CALL ./env/Scripts/activate.bat
+CALL env/Scripts/activate.bat
 CALL pip install -r requirements.txt
 @echo off
 SETLOCAL

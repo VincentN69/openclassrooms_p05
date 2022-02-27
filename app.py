@@ -1,11 +1,10 @@
 from flask import Flask, render_template, redirect, url_for, request,jsonify
 from werkzeug.wrappers import Request, Response
 
-from prediction_model import PredictionModel
+from ressources.prediction_model import PredictionModel
 
 pred_model = PredictionModel()
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
@@ -25,14 +24,6 @@ def predict():
     else:
         msg_result = ' | '.join(arr_results)
     return msg_result
-
-def text_tokenizer(x):
-    return x.split(',')
-
-def tokenize_text(x):
-    x=x.split(',')
-    tags=[i.strip() for i in x]
-    return tags
 
 if __name__ == "__main__":
     app.run()
