@@ -21,8 +21,8 @@ import re
 import numpy as np
 
 class PredictionModel:
-    MODEL_PATH = 'D:/data/P05/models/1_LogisticRegression_TFidf.pkl'
-    OUTPUT_TRANSFORMER_PATH = 'D:/data/P05/models/tags_transformer.joblib'
+    MODEL_PATH = './models/LogisticRegression_TFidf.pkl'
+    OUTPUT_TRANSFORMER_PATH = './models/tags_transformer.joblib'
     
     def __init__(self) -> None:
         self._model = self.import_predict_model()
@@ -102,6 +102,6 @@ class PredictionModel:
 if __name__ =='__main__':
     test = PredictionModel()
     input_test = {}
-    input_test['txt_question'] = 'How to pass two strings to a PowerShell function?'
-    input_test['txt_body'] = '<p>How do I pass <code>$dir</code> and <code>$file</code>, then <a href=""https://stackoverflow.com/q/15113413/4531180"">concatenate</a> them to a single path?</p><p>Output:</p><p>worker:</p><pre><code>. /home/nicholas/powershell/functions/library.ps1$dir = &quot;/home/nicholas/powershell/regex&quot;$file = &quot;a.log&quot;SearchFile($dir,$file)</code></pre><p>I seem to be passing an array of sorts for <code>$dir</code> and nothing is getting assigned for <code>$file</code> in <code>SearchFile</code> as expected.</p>'
+    input_test['txt_question'] = 'Convert a Python list of lists to a single string'
+    input_test['txt_body'] = "<p>I have list of lists consisting of chars and integers like this:</p><pre><code>list = [[65], [119, 'e', 's', 'i'], [111, 'd', 'l'], [111, 'l', 'w'], [108, 'd', 'v', 'e', 'i'], [105, 'n'], [97, 'n'], ['111', 'k', 'a']]</code></pre><p>I want to convert this into a single string like this:</p><pre><code>&quot;65 119esi 111dl 111lw 108dvei 105n 97n 111ka&quot;</code></pre><p>I have tried this:</p><pre><code>new_list = [' '.join(x for x in list)]</code></pre><p>but it is giving me this error:</p><pre><code>TypeError: sequence item 0: expected str instance, list found</code></pre><p>So what am i supposed to do, I'm new to coding!</p>"
     test.predict(input_test)
