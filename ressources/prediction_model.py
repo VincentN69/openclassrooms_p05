@@ -1,6 +1,7 @@
 import joblib
 import pandas as pd
 import nltk
+import pickle
 from nltk.stem import WordNetLemmatizer
 """
 nltk.download('punkt')
@@ -16,13 +17,16 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.feature_extraction.text import CountVectorizer
+
+print('Tags transformer loaded.')
 from scipy import sparse
 import re
 import numpy as np
 
 class PredictionModel:
     MODEL_PATH = './models/LogisticRegression_TFidf.pkl'
-    OUTPUT_TRANSFORMER_PATH = './models/tags_transformer.joblib'
+    TAGS_PATH = './models/tags_list'
     
     def __init__(self) -> None:
         self._model = self.import_predict_model()
@@ -52,7 +56,9 @@ class PredictionModel:
         return model
     
     def import_ouput_model(self):
-        model = joblib.load(self.OUTPUT_TRANSFORMER_PATH)
+        with open(self.TAGS_PATH,'rb') as fp:
+            tags_list = pickle.load(fp)
+        model = CountVectorizer(vocabulary=tags_list, analyzer=lambda x: x.split(','))
         return model
 
     def word_processing(self, text):
